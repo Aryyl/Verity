@@ -1,0 +1,59 @@
+{
+  "name": "ai-saas-landing-page",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "ts:check": "tsc --noEmit",
+    "lint": "npx ultracite lint",
+    "format": "npx ultracite fix",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck",
+    "biome-check": "biome check --log-level=error --max-diagnostics=300",
+    "fix": "biome check --write --unsafe"
+  },
+  "author": "Aayush Bharti",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aayushbharti/ai-saas-landing-starter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aayushbharti/ai-saas-landing-starter/issues"
+  },
+  "keywords": [
+    "ai",
+    "saas",
+    "landing-page",
+    "nextjs",
+    "tailwindcss",
+    "react",
+    "typescript"
+  ],
+  "dependencies": {
+    "@number-flow/react": "^0.5.10",
+    "clsx": "^2.1.1",
+    "critters": "^0.0.25",
+    "lucide-react": "^1.8.0",
+    "motion": "^12.23.27",
+    "next": "16.1.1",
+    "next-themes": "^0.4.6",
+    "prettier": "^3.8.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.3",
+    "react-just-parallax": "^3.1.16",
+    "tailwind-merge": "^3.4.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.4",
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.2",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.18",
+    "typescript": "^5.9.3",
+    "ultracite": "6.5.0"
+  }
+}

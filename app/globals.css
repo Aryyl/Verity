@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sora: "Sora", sans-serif;
+  --font-code: "Source Code Pro", monospace;
+  --font-grotesk: "Space Grotesk", sans-serif;
+}
+
+/* ═══════════════════════════════════════════
+   DASHBOARD — Grid baked into shell background
+   (no absolute divs = no seams, no weird lines)
+═══════════════════════════════════════════ */
+
+/* LIGHT MODE — indigo gradient + seamless grid as one background */
+.dashboard-shell {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M 48 0 L 0 0 0 48' fill='none' stroke='%236366F1' stroke-opacity='0.07' stroke-width='1'/%3E%3C/svg%3E")
+    top left / 48px 48px repeat,
+    linear-gradient(150deg, #edeeff 0%, #f3f4ff 45%, #ece9ff 100%);
+}
+
+/* DARK MODE — dark base + purple grid */
+.dark .dashboard-shell {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M 48 0 L 0 0 0 48' fill='none' stroke='%238B5CF6' stroke-opacity='0.09' stroke-width='1'/%3E%3C/svg%3E")
+    top left / 48px 48px repeat,
+    #080612;
+}
+
+/* Corner glows — fixed position, no scroll seams */
+.dashboard-glow-tr {
+  background: radial-gradient(ellipse at top right, rgba(99,102,241,0.16) 0%, transparent 65%);
+  pointer-events: none;
+}
+.dark .dashboard-glow-tr {
+  background: radial-gradient(ellipse at top right, rgba(137,249,232,0.1) 0%, transparent 65%);
+}
+.dashboard-glow-bl {
+  background: radial-gradient(ellipse at bottom left, rgba(168,85,247,0.14) 0%, transparent 65%);
+  pointer-events: none;
+}
+.dark .dashboard-glow-bl {
+  background: radial-gradient(ellipse at bottom left, rgba(216,124,238,0.08) 0%, transparent 65%);
+}
+
+/* ══════════════════════════════════════════
+   LIGHT MODE UI polishing
+══════════════════════════════════════════ */
+
+/* Header — frosted glass */
+html:not(.dark) .dashboard-shell header {
+  background: rgba(255,255,255,0.88) !important;
+  border-bottom-color: rgba(99,102,241,0.12) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Sidebar — subtle gradient */
+html:not(.dark) .dashboard-shell aside,
+html:not(.dark) .dashboard-shell nav {
+  background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(245,243,255,0.96) 100%) !important;
+  border-right-color: rgba(99,102,241,0.1) !important;
+}
+
+/* Cards — glassy with indigo tint borders */
+html:not(.dark) .dashboard-shell [class*="rounded-2xl"],
+html:not(.dark) .dashboard-shell [class*="rounded-xl"] {
+  border-color: rgba(99, 102, 241, 0.11) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.06),
+              0 0 0 1px rgba(99, 102, 241, 0.04);
+}
+
+/* Rounded-full elements — remove blur only, keep own background */
+html:not(.dark) .dashboard-shell button[class*="rounded-full"],
+html:not(.dark) .dashboard-shell div[class*="rounded-full"],
+html:not(.dark) .dashboard-shell span[class*="rounded-full"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Table rows — transparent */
+html:not(.dark) .dashboard-shell table [class*="rounded"] {
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Table header */
+html:not(.dark) .dashboard-shell thead {
+  background-color: rgba(238, 240, 255, 0.7) !important;
+}
+
+/* Active sidebar nav link */
+html:not(.dark) .dashboard-shell a[class*="bg-blue-50"] {
+  background: linear-gradient(90deg, rgba(99,102,241,0.12), rgba(168,85,247,0.07)) !important;
+  border-left: 3px solid #6366F1;
+}
+
+
+
+
+
+* {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-n-8 text-n-1 text-base;
+  }
+}
+
+.rotate-45 {
+  @apply rotate-[45deg];
+}
+
+.rotate-90 {
+  @apply rotate-[90deg];
+}
+
+.rotate-135 {
+  @apply rotate-[135deg];
+}
+
+.rotate-180 {
+  @apply rotate-[180deg];
+}
+
+.rotate-225 {
+  @apply rotate-[225deg];
+}
+
+.rotate-270 {
+  @apply rotate-[270deg];
+}
+
+.rotate-315 {
+  @apply rotate-[315deg];
+}
+
+.rotate-360 {
+  @apply rotate-[360deg];
+}
+
+.-rotate-45 {
+  @apply rotate-[-45deg];
+}
+
+.-rotate-90 {
+  @apply rotate-[-90deg];
+}
+
+.-rotate-135 {
+  @apply rotate-[-135deg];
+}
+
+.-rotate-180 {
+  @apply rotate-[-180deg];
+}
+
+.-rotate-225 {
+  @apply rotate-[-225deg];
+}
+
+.-rotate-270 {
+  @apply rotate-[-270deg];
+}
+
+.-rotate-315 {
+  @apply rotate-[-315deg];
+}
+
+.-rotate-360 {
+  @apply rotate-[-360deg];
+}
+
+number-flow-react::part(suffix) {
+  margin-left: 0.0625em;
+  font-weight: normal;
+  font-size: 0.55em;
+  color: var(--muted);
+}
