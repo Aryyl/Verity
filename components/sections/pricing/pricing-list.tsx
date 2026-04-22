@@ -77,20 +77,15 @@ const PricingList = () => {
                 )}
               </div>
 
-              <Button
-                className="mb-6 w-full"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (item.price) {
-                    openAuthModal();
-                  } else {
-                    window.location.href = "mailto:contact@verity.ai";
-                  }
-                }}
-                white={!!item.price}
-              >
-                {item.price ? "Get started" : "Contact us"}
-              </Button>
+              <div onClick={(e) => e.stopPropagation()}>
+                <Button
+                  className="mb-6 w-full"
+                  onClick={item.price ? openAuthModal : () => { window.location.href = "mailto:contact@verity.ai"; }}
+                  white={!!item.price}
+                >
+                  {item.price ? "Get started" : "Contact us"}
+                </Button>
+              </div>
 
               <ul>
                 {item.features.map((feature, index) => (
