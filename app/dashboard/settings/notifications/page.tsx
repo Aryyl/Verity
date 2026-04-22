@@ -89,9 +89,9 @@ export default function NotificationSettings() {
 
       {/* Toast */}
       {toast && (
-        <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl border text-sm font-semibold animate-in slide-in-from-bottom-4 duration-300 ${toast.type === "success" ? "bg-emerald-600 border-emerald-500 text-white" : "bg-amber-500 border-amber-400 text-white"}`}>
+        <div className={`toast-notification fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl border text-sm font-semibold animate-in slide-in-from-bottom-4 duration-300 ${toast.type === "success" ? "bg-emerald-600 border-emerald-500 text-white" : "bg-amber-500 border-amber-400 text-white"}`}>
           {toast.type === "success" ? <CheckCircle2 className="w-5 h-5" /> : <AlertTriangle className="w-5 h-5" />}
-          {toast.msg}
+          <span className="text-slate-900 dark:text-white">{toast.msg}</span>
         </div>
       )}
 
@@ -225,8 +225,8 @@ export default function NotificationSettings() {
           <button onClick={() => setTeamsModal(true)} className="text-[10px] font-bold text-blue-600 dark:text-color-1 uppercase tracking-widest hover:underline">Add New Connection</button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="border border-slate-200 dark:border-n-1/10 rounded-xl p-4 flex gap-4 items-center bg-slate-50 dark:bg-n-8/30 justify-between">
-            <div className="flex items-center gap-3">
+          <div className="border border-slate-200 dark:border-n-1/10 rounded-xl p-4 flex flex-col gap-3 bg-slate-50 dark:bg-n-8/30">
+            <div className="flex items-center gap-3 min-w-0">
               <div className="w-10 h-10 bg-white dark:bg-n-8 rounded-lg flex items-center justify-center border border-slate-200 dark:border-n-1/10 shadow-sm flex-shrink-0">
                 <span className="font-bold text-[#E01E5A] text-xs">Slack</span>
               </div>
@@ -235,7 +235,7 @@ export default function NotificationSettings() {
                 <span className={`text-[10px] font-semibold truncate ${slackConnected ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-n-4"}`}>{slackConnected ? "Connected: #alerts-rights" : "Disconnected"}</span>
               </div>
             </div>
-            <button onClick={() => { setSlackConnected(c => !c); setHasChanges(true); showToast(slackConnected ? "Slack disconnected" : "Slack reconnected!", slackConnected ? "warn" : "success"); }} className={`text-[10px] font-bold px-2.5 py-1 rounded border transition-colors flex-shrink-0 ${slackConnected ? "border-red-200 text-red-500 hover:bg-red-50" : "border-emerald-200 text-emerald-600 hover:bg-emerald-50"}`}>
+            <button onClick={() => { setSlackConnected(c => !c); setHasChanges(true); showToast(slackConnected ? "Slack disconnected" : "Slack reconnected!", slackConnected ? "warn" : "success"); }} className={`self-start text-[10px] font-bold px-3 py-1.5 rounded border transition-colors ${slackConnected ? "border-red-200 text-red-500 hover:bg-red-50" : "border-emerald-200 text-emerald-600 hover:bg-emerald-50"}`}>
               {slackConnected ? "Disconnect" : "Connect"}
             </button>
           </div>

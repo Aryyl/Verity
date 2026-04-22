@@ -45,7 +45,7 @@ export default function Sidebar({ onClose }: { onClose: () => void }) {
           <div className="flex items-center gap-3">
              <Image src={brandLogo} alt="Verity" width={32} height={32} className="rounded-md" />
              <span className="font-bold font-grotesk tracking-wide text-lg text-slate-900 dark:text-n-1">
-                Media Rights
+                Verity
              </span>
           </div>
           <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-slate-500 dark:text-n-3 pl-11">

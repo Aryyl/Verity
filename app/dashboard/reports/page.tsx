@@ -103,8 +103,9 @@ export default function Reports() {
 
       {/* Toast */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl border border-emerald-500 bg-emerald-600 text-white text-sm font-semibold animate-in slide-in-from-bottom-4 duration-300">
-          <CheckCircle2 className="w-5 h-5" /> {toast}
+        <div className="toast-notification fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl border border-emerald-500 bg-emerald-600 text-white dark:text-white text-sm font-semibold animate-in slide-in-from-bottom-4 duration-300">
+           <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-white" /> 
+           <span className="text-slate-900 dark:text-white">{toast}</span>
         </div>
       )}
 
@@ -178,20 +179,39 @@ export default function Reports() {
               <span className="flex items-center gap-1.5 text-red-600 dark:text-color-3"><span className="w-2 h-2 rounded-full bg-red-600 dark:bg-color-3"></span>Infringing</span>
             </div>
           </div>
-          <div className="flex-1 flex items-end justify-between gap-1 sm:gap-4 h-48 mt-4">
+        <div className="flex-1 flex items-end justify-between gap-1 sm:gap-3 h-52 mt-4">
             {data.chartData.map((d, i) => (
               <div key={i} className="flex-1 flex flex-col items-center justify-end h-full relative group cursor-pointer" onMouseEnter={() => setHoveredBar(i)} onMouseLeave={() => setHoveredBar(null)}>
                 {(d.highlight || hoveredBar === i) && (
-                  <div className="absolute -top-10 bg-slate-800 dark:bg-n-8 text-white px-2 py-1 rounded text-[10px] font-bold shadow-lg z-10 whitespace-nowrap animate-in fade-in duration-150">
-                    Organic: {d.org}% · Infringing: {d.inf}%
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 dark:bg-n-8 rotate-45"></div>
+                  <div className="chart-tooltip absolute -top-10 bg-slate-800 text-white px-2.5 py-1.5 rounded-lg text-[10px] font-bold shadow-lg z-10 whitespace-nowrap animate-in fade-in duration-150 border border-slate-700">
+                    Organic: {d.org}% &nbsp;·&nbsp; Infringing: {d.inf}%
+                    <div className="chart-tooltip absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-800 rotate-45 border-r border-b border-slate-700"></div>
                   </div>
                 )}
-                <div className="w-full sm:w-10 relative flex items-end h-full">
-                  <div className={`absolute bottom-0 left-0 right-0 bg-blue-100 dark:bg-color-1/20 rounded-sm transition-all duration-700 ease-out`} style={{ height: barAnimated ? `${d.org}%` : "0%" }}></div>
-                  <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 sm:w-6 ${d.highlight ? "bg-blue-600 dark:bg-color-1 shadow-[0_0_10px_rgba(0,102,255,0.5)]" : "bg-slate-300 dark:bg-n-6"} rounded-sm z-1 transition-all duration-700 ease-out`} style={{ height: barAnimated ? `${d.inf}%` : "0%", transitionDelay: `${i * 50}ms` }}></div>
+                <div className="w-full sm:w-10 relative flex items-end h-full gap-0.5">
+                  {/* Organic bar — soft blue fill */}
+                  <div
+                    className="flex-1 rounded-t-sm transition-all duration-700 ease-out"
+                    style={{
+                      height: barAnimated ? `${d.org}%` : "0%",
+                      background: "linear-gradient(to top, #3b82f6, #93c5fd)",
+                      opacity: 0.85,
+                    }}
+                  />
+                  {/* Infringing bar — red/rose fill */}
+                  <div
+                    className="flex-1 rounded-t-sm transition-all duration-700 ease-out"
+                    style={{
+                      height: barAnimated ? `${d.inf}%` : "0%",
+                      transitionDelay: `${i * 50}ms`,
+                      background: d.highlight
+                        ? "linear-gradient(to top, #dc2626, #f87171)"
+                        : "linear-gradient(to top, #6366f1, #a5b4fc)",
+                      boxShadow: d.highlight ? "0 0 8px rgba(220,38,38,0.4)" : "none",
+                    }}
+                  />
                 </div>
-                <span className="text-[9px] font-bold tracking-widest text-slate-400 dark:text-n-4 mt-3 uppercase">{d.label}</span>
+                <span className="text-[9px] font-bold tracking-widest text-slate-500 dark:text-n-4 mt-2 uppercase">{d.label}</span>
               </div>
             ))}
           </div>

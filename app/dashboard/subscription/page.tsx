@@ -99,9 +99,9 @@ export default function Subscription() {
 
       {/* Toast */}
       {toast && (
-        <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl border text-sm font-semibold animate-in slide-in-from-bottom-4 duration-300 ${toast.type === "success" ? "bg-emerald-600 border-emerald-500 text-white" : "bg-amber-500 border-amber-400 text-white"}`}>
+        <div className={`toast-notification fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl border text-sm font-semibold animate-in slide-in-from-bottom-4 duration-300 ${toast.type === "success" ? "bg-emerald-600 border-emerald-500 text-white" : "bg-amber-500 border-amber-400 text-white"}`}>
           {toast.type === "success" ? <CheckCircle2 className="w-5 h-5" /> : <AlertTriangle className="w-5 h-5" />}
-          {toast.msg}
+          <span className="text-slate-900 dark:text-white">{toast.msg}</span>
         </div>
       )}
 
@@ -300,10 +300,10 @@ export default function Subscription() {
           return (
             <div key={tier.name} className={`relative p-8 rounded-2xl flex flex-col h-full bg-white dark:bg-[#0E0C15] transition-all ${isCurrent ? "border-2 border-blue-600 dark:border-color-1 shadow-lg shadow-blue-900/5 -mt-2 mb-2 scale-[1.02]" : "border border-slate-200 dark:border-n-1/10 shadow-sm hover:shadow-md"}`}>
               {tier.isRecommended && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-600 dark:bg-color-1 text-white dark:text-n-8 text-[10px] font-bold tracking-widest uppercase rounded-full">Recommended</div>
+                <div className="plan-badge absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-600 dark:bg-color-1 text-white dark:text-n-8 text-[10px] font-bold tracking-widest uppercase rounded-full">Recommended</div>
               )}
               {isCurrent && (
-                <div className="absolute -top-3 right-4 px-3 py-1 bg-emerald-600 text-white text-[10px] font-bold tracking-widest uppercase rounded-full">Current</div>
+                <div className="plan-badge absolute -top-3 right-4 px-3 py-1 bg-emerald-600 text-white text-[10px] font-bold tracking-widest uppercase rounded-full">Current</div>
               )}
               <h3 className="font-bold text-lg text-slate-900 dark:text-n-1">{tier.name}</h3>
               <div className="mt-2 mb-6">

@@ -5,10 +5,14 @@ import Image from "next/image";
 import { useState } from "react";
 import Button from "@/components/atoms/button";
 import { images, pricing } from "@/constants";
+import { cn } from "@/lib/utils";
+import { useUI } from "@/context/ui-context";
 import { Tab } from "./pricing-tab";
 
 const PricingList = () => {
   const [selected, setSelected] = useState("Monthly");
+  const [activeTier, setActiveTier] = useState<string | null>(null);
+  const { openAuthModal } = useUI();
 
   return (
     <div className="flex flex-col gap-4 max-lg:flex-wrap">
@@ -32,11 +36,28 @@ const PricingList = () => {
               ? item.price
               : Number(item.price) * 12 * 0.75;
 
+          const isActive = activeTier === item.id;
+
           return (
             <div
-              className="h-full w-[19rem] rounded-[2rem] border border-n-6 bg-n-8 px-6 odd:my-4 odd:py-8 even:py-14 max-lg:w-full lg:w-auto [&>h4]:first:text-color-2 [&>h4]:last:text-color-3 [&>h4]:even:text-color-1"
+              className={cn(
+                "relative h-full w-[19rem] rounded-[2rem] border bg-n-8 px-6 cursor-pointer",
+                "transition-all duration-300 ease-in-out",
+                "odd:my-4 odd:py-8 even:py-14",
+                "max-lg:w-full lg:w-auto",
+                "[&>h4]:first:text-color-2 [&>h4]:last:text-color-3 [&>h4]:even:text-color-1",
+                isActive
+                  ? "border-color-1 scale-[1.04] shadow-[0_0_35px_rgba(172,130,255,0.35)]"
+                  : "border-n-6 hover:border-n-4"
+              )}
               key={item.id}
+              onClick={() => setActiveTier(isActive ? null : item.id)}
             >
+              {/* Selected glow ring overlay */}
+              {isActive && (
+                <div className="pointer-events-none absolute inset-0 rounded-[2rem] border border-color-1/60 shadow-[inset_0_0_20px_rgba(172,130,255,0.1)]" />
+              )}
+
               <h4 className="h4 mb-4">{item.title}</h4>
               <p className="body-2 mb-3 min-h-16 text-n-1/50">
                 {item.description}
@@ -58,7 +79,14 @@ const PricingList = () => {
 
               <Button
                 className="mb-6 w-full"
-                href={item.price ? "/pricing" : "mailto:contact@verity.ai"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (item.price) {
+                    openAuthModal();
+                  } else {
+                    window.location.href = "mailto:contact@verity.ai";
+                  }
+                }}
                 white={!!item.price}
               >
                 {item.price ? "Get started" : "Contact us"}

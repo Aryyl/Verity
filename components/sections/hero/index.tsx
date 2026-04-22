@@ -11,11 +11,11 @@ import { BackgroundCircles, BottomLine, Gradient } from "../../design/hero";
 import Section from "../../layout/section";
 import CompanyLogos from "./company-logos";
 import Notification from "./notification";
-import AuthModal from "../../layout/auth-modal";
+import { useUI } from "@/context/ui-context";
 
 const Hero = () => {
   const parallaxRef = useRef(null);
-  const [showAuth, setShowAuth] = useState(false);
+  const { openAuthModal } = useUI();
   return (
     <Section
       className={cn("-mt-[5.25rem] pt-[12rem]")}
@@ -42,8 +42,8 @@ const Hero = () => {
           <p className={cn("body-1 mx-auto mb-6 max-w-3xl text-n-2 lg:mb-8")}>
             The world's first near-real-time detection engine for deepfakes and asset misuse. Scaled to monitor over 10 million digital assets.
           </p>
-          <Button white onClick={() => setShowAuth(true)}>
-            Get Started
+          <Button white onClick={openAuthModal}>
+            Try it now
           </Button>
         </div>
 
@@ -107,7 +107,6 @@ const Hero = () => {
         <CompanyLogos className="relative z-10 mt-20" />
       </div>
       <BottomLine />
-      <AuthModal isOpen={showAuth} onClose={() => setShowAuth(false)} />
     </Section>
   );
 };

@@ -35,7 +35,7 @@ function ProfileDropdown({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="absolute top-16 right-0 w-60 bg-white dark:bg-[#14121c] border border-slate-200 dark:border-n-1/10 rounded-2xl shadow-2xl overflow-hidden z-50 animate-in zoom-in-95 fade-in duration-200">
+    <div className="popup-panel absolute top-16 right-0 w-60 bg-white dark:bg-[#14121c] border border-slate-200 dark:border-n-1/10 rounded-2xl shadow-2xl overflow-hidden z-50 animate-in zoom-in-95 fade-in duration-200">
       {/* Gradient top accent */}
       <div className="h-0.5 w-full" style={{ background: "linear-gradient(90deg,#89F9E8,#D87CEE,#FACB7B)" }} />
 
@@ -158,7 +158,7 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
             const q = searchQuery.trim().toLowerCase();
             const filtered = q ? allAssets.filter(a => a.name.toLowerCase().includes(q) || a.type.toLowerCase().includes(q) || a.source.toLowerCase().includes(q) || a.detail.toLowerCase().includes(q)) : [];
             return (
-              <div className="absolute top-14 left-0 w-full bg-white dark:bg-[#14121c] border border-slate-200 dark:border-n-1/10 rounded-xl shadow-xl overflow-hidden z-50 animate-in slide-in-from-top-2 duration-200">
+              <div className="popup-panel absolute top-14 left-0 w-full bg-white dark:bg-[#14121c] border border-slate-200 dark:border-n-1/10 rounded-xl shadow-xl overflow-hidden z-50 animate-in slide-in-from-top-2 duration-200">
                 {q === '' ? (
                   <div className="p-4">
                     <p className="text-[10px] uppercase font-bold tracking-widest text-slate-400 dark:text-n-4 mb-2">Recent Searches</p>
@@ -253,7 +253,7 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
             <Filter className="h-5 w-5" />
           </button>
             {showFilter && (
-              <div className="absolute top-12 right-0 w-48 bg-white dark:bg-[#14121c] border border-slate-200 dark:border-n-1/10 rounded-xl shadow-xl overflow-hidden z-50 animate-in zoom-in-95 duration-200">
+              <div className="popup-panel absolute top-12 right-0 w-48 bg-white dark:bg-[#14121c] border border-slate-200 dark:border-n-1/10 rounded-xl shadow-xl overflow-hidden z-50 animate-in zoom-in-95 duration-200">
                  <div className="p-3 border-b border-slate-100 dark:border-n-1/10">
                    <p className="text-[10px] uppercase font-bold tracking-widest text-slate-400 dark:text-n-4">Quick Filters</p>
                  </div>
@@ -279,7 +279,7 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
               <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-600 rounded-full border-2 border-white dark:border-[#0E0C15]"></span>
             </button>
             {showNotif && (
-              <div className="absolute top-12 right-0 w-72 bg-white dark:bg-[#14121c] border border-slate-200 dark:border-n-1/10 rounded-xl shadow-xl overflow-hidden z-50 animate-in zoom-in-95 duration-200">
+              <div className="popup-panel absolute top-12 right-0 w-72 bg-white dark:bg-[#14121c] border border-slate-200 dark:border-n-1/10 rounded-xl shadow-xl overflow-hidden z-50 animate-in zoom-in-95 duration-200">
                  <div className="p-3 border-b border-slate-100 dark:border-n-1/10 flex justify-between items-center">
                    <p className="text-[10px] uppercase font-bold tracking-widest text-slate-400 dark:text-n-4">Alerts</p>
                    <button className="text-[10px] font-bold text-blue-600 dark:text-color-1 hover:underline">Mark all read</button>

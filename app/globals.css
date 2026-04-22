@@ -68,9 +68,11 @@ html:not(.dark) .dashboard-shell nav {
   border-right-color: rgba(99,102,241,0.1) !important;
 }
 
-/* Cards — glassy with indigo tint borders */
-html:not(.dark) .dashboard-shell [class*="rounded-2xl"],
-html:not(.dark) .dashboard-shell [class*="rounded-xl"] {
+/* Cards — glassy with indigo tint borders.
+   Excludes fixed/absolute overlays (dropdowns, toasts, modals)
+   so they keep their own intended dark backgrounds in light mode. */
+html:not(.dark) .dashboard-shell [class*="rounded-2xl"]:not([class*="fixed"]):not([class*="absolute"]):not([class*="z-50"]):not([class*="z-[50"]):not([class*="z-[100"]),
+html:not(.dark) .dashboard-shell [class*="rounded-xl"]:not([class*="fixed"]):not([class*="absolute"]):not([class*="z-50"]):not([class*="z-[50"]):not([class*="z-[100"]) {
   border-color: rgba(99, 102, 241, 0.11) !important;
   background-color: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(8px);
@@ -79,7 +81,110 @@ html:not(.dark) .dashboard-shell [class*="rounded-xl"] {
               0 0 0 1px rgba(99, 102, 241, 0.04);
 }
 
+/* Popups/overlays — opaque white background so they stay readable in light mode.
+   EXEMPTIONS: .chart-tooltip, .toast-notification, and .plan-badge must keep their own colors/themes. */
+html:not(.dark) .dashboard-shell [class*="fixed"][class*="rounded"]:not(.chart-tooltip):not(.toast-notification):not(.plan-badge),
+html:not(.dark) .dashboard-shell [class*="absolute"][class*="rounded"]:not(.chart-tooltip):not(.toast-notification):not(.plan-badge),
+html:not(.dark) .dashboard-shell [class*="z-50"][class*="rounded"]:not(.chart-tooltip):not(.toast-notification):not(.plan-badge),
+html:not(.dark) .dashboard-shell [class*="z-[50"][class*="rounded"]:not(.chart-tooltip):not(.toast-notification):not(.plan-badge),
+html:not(.dark) .dashboard-shell [class*="z-[100"][class*="rounded"]:not(.chart-tooltip):not(.toast-notification):not(.plan-badge) {
+  background-color: #ffffff !important;
+  border-color: rgba(226, 232, 240, 1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0,0,0,0.05) !important;
+}
+
+/* Explicit fix: header notification + profile dropdowns in light mode */
+html:not(.dark) .dashboard-shell header ~ * [class*="z-50"]:not(.toast-notification):not(.chart-tooltip):not(.plan-badge),
+html:not(.dark) .dashboard-shell [class*="absolute"][class*="z-50"]:not(.toast-notification):not(.chart-tooltip):not(.plan-badge) {
+  background-color: #ffffff !important;
+  border-color: rgba(203, 213, 225, 1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(0,0,0,0.04) !important;
+}
+
+/* Direct popup-panel fix — dropdown panels get white opaque background */
+html:not(.dark) .dashboard-shell .popup-panel {
+  background-color: #ffffff !important;
+  border-color: rgba(203, 213, 225, 1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0,0,0,0.04) !important;
+}
+
+/* Toast notifications — Responsive theme targeting.
+   In light mode, we use a light background and dark text for maximum clarity.
+   In dark mode, we keep the high-contrast status colors. */
+html:not(.dark) .dashboard-shell .toast-notification,
+.dashboard-shell .toast-notification {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Light mode text/icon color */
+html:not(.dark) .dashboard-shell .toast-notification {
+  color: #0f172a !important; /* Dark slate text */
+}
+.dark .dashboard-shell .toast-notification {
+  color: #ffffff !important;
+}
+
+/* Ensure each toast variant keeps its specific color */
+html:not(.dark) .dashboard-shell .toast-notification[class*="bg-emerald"] {
+  background-color: #ecfdf5 !important; /* light emerald */
+  border-color: #10b981 !important;
+}
+html:not(.dark) .dashboard-shell .toast-notification[class*="bg-amber"] {
+  background-color: #fffbeb !important; /* light amber */
+  border-color: #f59e0b !important;
+}
+html:not(.dark) .dashboard-shell .toast-notification[class*="bg-slate"] {
+  background-color: #f8fafc !important; /* light slate */
+  border-color: #334155 !important;
+}
+
+/* Dark mode overrides (restore high contrast) */
+.dark .dashboard-shell .toast-notification[class*="bg-emerald"] {
+  background-color: #059669 !important;
+}
+.dark .dashboard-shell .toast-notification[class*="bg-amber"] {
+  background-color: #d97706 !important;
+}
+.dark .dashboard-shell .toast-notification[class*="bg-slate"] {
+  background-color: #0f172a !important;
+}
+
+/* Plan Badges (Subscription page) — Theme targeting */
+html:not(.dark) .dashboard-shell .plan-badge { color: #0f172a !important; }
+.dark .dashboard-shell .plan-badge { color: #ffffff !important; }
+
+html:not(.dark) .dashboard-shell .plan-badge[class*="bg-emerald"] {
+  background-color: #d1fae5 !important;
+  border-color: #10b981 !important;
+}
+html:not(.dark) .dashboard-shell .plan-badge[class*="bg-blue"] {
+  background-color: #dbeafe !important;
+  border-color: #3b82f6 !important;
+}
+.dark .dashboard-shell .plan-badge[class*="bg-emerald"] { background-color: #059669 !important; }
+.dark .dashboard-shell .plan-badge[class*="bg-blue"] { background-color: #2563eb !important; }
+
+/* Chart Tooltips — ensure they keep their dark background in light mode */
+html:not(.dark) .dashboard-shell .chart-tooltip,
+.dashboard-shell .chart-tooltip {
+  background-color: #1e293b !important; /* bg-slate-800 */
+  color: #ffffff !important;
+  border-color: #334155 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
 /* Rounded-full elements — remove blur only, keep own background */
+
 html:not(.dark) .dashboard-shell button[class*="rounded-full"],
 html:not(.dark) .dashboard-shell div[class*="rounded-full"],
 html:not(.dark) .dashboard-shell span[class*="rounded-full"] {
@@ -88,8 +193,8 @@ html:not(.dark) .dashboard-shell span[class*="rounded-full"] {
   box-shadow: none !important;
 }
 
-/* Table rows — transparent */
-html:not(.dark) .dashboard-shell table [class*="rounded"] {
+/* Table rows — transparent background for containers, but EXEMPT buttons so they keep their colors */
+html:not(.dark) .dashboard-shell table [class*="rounded"]:not(button) {
   backdrop-filter: none !important;
   box-shadow: none !important;
   border-color: transparent !important;

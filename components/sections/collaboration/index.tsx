@@ -1,32 +1,38 @@
+"use client";
+
 import Image from "next/image";
 import Button from "@/components/atoms/button";
 import { LeftCurve, RightCurve } from "@/components/design/collaboration";
 import Section from "@/components/layout/section";
 import { OrbitingCircles } from "@/components/ui/orbiting-circles";
 import { collabApps, collabContent, collabText, images } from "@/constants";
+import { useUI } from "@/context/ui-context";
 
-const Collaboration = () => (
-  <Section crosses id="collaboration">
-    <div className="container lg:flex">
-      <div className="max-w-[25rem]">
-        <h2 className="h2 mb-12 max-md:mb-4">
-          Verity for seamless asset protection
-        </h2>
-        <ul className="mb-10 max-w-[22rem] md:mb-14">
-          {collabContent.map((item) => (
-            <li className="mb-3 py-3" key={item.id}>
-              <div className="flex items-center">
-                <Image alt="check" height={24} src={images.check} width={24} />
-                <h6 className="body-2 ml-5">{item.title}</h6>
-              </div>
-              {!!item.text && (
-                <p className="body-2 mt-3 text-n-4">{item.text}</p>
-              )}
-            </li>
-          ))}
-        </ul>
-        <Button>Try it now</Button>
-      </div>
+const Collaboration = () => {
+  const { openAuthModal } = useUI();
+
+  return (
+    <Section crosses id="collaboration">
+      <div className="container lg:flex">
+        <div className="max-w-[25rem]">
+          <h2 className="h2 mb-12 max-md:mb-4">
+            Verity for seamless asset protection
+          </h2>
+          <ul className="mb-10 max-w-[22rem] md:mb-14">
+            {collabContent.map((item) => (
+              <li className="mb-3 py-3" key={item.id}>
+                <div className="flex items-center">
+                  <Image alt="check" height={24} src={images.check} width={24} />
+                  <h6 className="body-2 ml-5">{item.title}</h6>
+                </div>
+                {!!item.text && (
+                  <p className="body-2 mt-3 text-n-4">{item.text}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+          <Button onClick={openAuthModal}>Try it now</Button>
+        </div>
 
       <div className="mt-4 lg:ml-auto xl:w-[38rem]">
         <p className="body-2 mb-8 text-n-4 md:mb-16 lg:mx-auto lg:mb-32 lg:w-[22rem]">
@@ -81,7 +87,8 @@ const Collaboration = () => (
         </div>
       </div>
     </div>
-  </Section>
-);
+    </Section>
+  );
+};
 
 export default Collaboration;

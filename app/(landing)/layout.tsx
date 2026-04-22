@@ -1,4 +1,7 @@
-import type React from "react";
+"use client";
+
+import { UIProvider, useUI } from "@/context/ui-context";
+import AuthModal from "@/components/layout/auth-modal";
 
 /**
  * Landing Page Layout
@@ -12,10 +15,18 @@ export default function LandingLayout({
   children: React.ReactNode;
 }) {
   return (
-    // `dark` class is hardcoded — landing page is always dark regardless of
-    // the dashboard's theme toggle, which only controls the html-level class.
+    <UIProvider>
+      <LandingContent>{children}</LandingContent>
+    </UIProvider>
+  );
+}
+
+function LandingContent({ children }: { children: React.ReactNode }) {
+  const { isAuthModalOpen, closeAuthModal } = useUI();
+  return (
     <div className="dark">
       {children}
+      <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} />
     </div>
   );
 }

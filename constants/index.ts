@@ -108,8 +108,8 @@ const {
 
 export const navigation = [
   { id: "0", title: "Modules", url: "#features" },
-  { id: "1", title: "Pricing", url: "#pricing" },
-  { id: "2", title: "Workflow", url: "#how-to-use" },
+  { id: "1", title: "Workflow", url: "#how-to-use" },
+  { id: "2", title: "Pricing", url: "#pricing" },
   { id: "3", title: "Architecture", url: "#roadmap" },
   { id: "4", title: "Sign In", url: "#login", onlyMobile: true },
   { id: "5", title: "Dashboard", url: "#login", onlyMobile: true },

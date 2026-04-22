@@ -9,12 +9,12 @@ import { yourlogo as brandLogo } from "@/public/assets/index";
 import Button from "../atoms/button";
 import { HamburgerMenu } from "../design/navbar";
 import MenuSvg from "../svg/menu-svg";
-import AuthModal from "./auth-modal";
+import { useUI } from "@/context/ui-context";
 
 const Navbar = () => {
   const [hash, setHash] = useState<string>("hero");
   const [openNavigation, setOpenNavigation] = useState<boolean>(false);
-  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const { openAuthModal } = useUI();
 
   useEffect(() => {
     const dynamicNavbarHighlight = () => {
@@ -89,7 +89,7 @@ const Navbar = () => {
                 onClick={(e) => {
                   if (item.url === '#login' || item.url === '#signup') {
                     e.preventDefault();
-                    setShowAuthModal(true);
+                    openAuthModal();
                   }
                   handleClick();
                 }}
@@ -102,11 +102,11 @@ const Navbar = () => {
 
         <button
           className="button mr-8 hidden text-n-1/50 transition-colors hover:text-n-1 lg:block uppercase tracking-wider"
-          onClick={() => setShowAuthModal(true)}
+          onClick={openAuthModal}
         >
           Login
         </button>
-        <Button className="hidden lg:flex" onClick={() => setShowAuthModal(true)}>
+        <Button className="hidden lg:flex" onClick={openAuthModal}>
           Dashboard
         </Button>
 
@@ -139,7 +139,7 @@ const Navbar = () => {
             onClick={(e) => {
               if (item.url === '#login' || item.url === '#signup') {
                 e.preventDefault();
-                setShowAuthModal(true);
+                openAuthModal();
               }
               handleClick();
             }}
@@ -150,7 +150,6 @@ const Navbar = () => {
       </div>
       <HamburgerMenu />
     </nav>
-    <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </>
   );
 };

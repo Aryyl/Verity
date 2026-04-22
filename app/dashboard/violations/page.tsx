@@ -122,9 +122,9 @@ export default function Violations() {
 
       {/* Toast */}
       {toast && (
-        <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl border text-sm font-semibold animate-in slide-in-from-bottom-4 duration-300 ${toast.type === "success" ? "bg-emerald-600 border-emerald-500 text-white" : toast.type === "warn" ? "bg-amber-500 border-amber-400 text-white" : "bg-slate-900 border-n-6 text-n-1"}`}>
+        <div className={`toast-notification fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl border text-sm font-semibold animate-in slide-in-from-bottom-4 duration-300 ${toast.type === "success" ? "bg-emerald-600 border-emerald-500 text-white" : toast.type === "warn" ? "bg-amber-500 border-amber-400 text-white" : "bg-slate-900 border-slate-700 text-white"}`}>
           {toast.type === "success" ? <CheckCircle2 className="w-5 h-5" /> : <AlertTriangle className="w-5 h-5" />}
-          {toast.msg}
+          <span className="text-slate-900 dark:text-white">{toast.msg}</span>
         </div>
       )}
 
@@ -354,7 +354,15 @@ export default function Violations() {
                             key={i}
                             disabled={!!processingId}
                             onClick={() => handleAction(c, act)}
-                            className={`w-full py-1.5 text-xs font-semibold rounded border flex items-center justify-center gap-1.5 transition-all active:scale-95 disabled:opacity-60 ${act === "Escalate DMCA" ? "bg-blue-700 border-blue-700 text-white dark:bg-color-1 dark:border-color-1 dark:text-n-8 hover:bg-blue-800" : act === "Review Evidence" ? "bg-white border-blue-200 text-blue-700 hover:bg-blue-50 dark:bg-n-8 dark:border-color-1/30 dark:text-color-1" : act === "Ignore" ? "bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200 dark:bg-n-7 dark:border-n-6 dark:text-n-4" : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50 dark:bg-n-8 dark:border-n-6 dark:text-n-3"}`}
+                            className={`w-full py-1.5 text-xs font-semibold rounded border flex items-center justify-center gap-1.5 transition-all active:scale-95 disabled:opacity-60
+                            ${ act === "Escalate DMCA"
+                              ? "bg-blue-700 border-blue-700 text-white hover:bg-blue-800"
+                              : act === "Review Evidence"
+                              ? "bg-blue-50 border-blue-300 text-blue-700 font-bold hover:bg-blue-100 dark:bg-n-8 dark:border-color-1/30 dark:text-color-1"
+                              : act === "Ignore"
+                              ? "bg-slate-200 border-slate-300 text-slate-700 font-semibold hover:bg-slate-300 dark:bg-n-7 dark:border-n-6 dark:text-n-4"
+                              : "bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200 dark:bg-n-8 dark:border-n-6 dark:text-n-3"
+                            }`}
                           >
                             {isLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : null}
                             {act}

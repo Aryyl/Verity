@@ -67,15 +67,24 @@ export default function DetectionFeed() {
     return () => clearInterval(interval);
   }, []);
 
+  const [actionResult, setActionResult] = useState<{ action: string; label: string; color: string; desc: string } | null>(null);
+
   const handleAction = (actionName: string) => {
     setIsProcessing(actionName);
+    const resultMap: Record<string, { label: string; color: string; desc: string }> = {
+      "Marked Safe": { label: "Marked Safe", color: "emerald", desc: "Asset verified as authentic. No action required." },
+      "Sent for Review": { label: "Queued for Review", color: "amber", desc: "Flagged for manual analyst review. Assigned to queue." },
+      "Take-down Initiated": { label: "Take-down Initiated", color: "red", desc: "Enforcement request submitted. Platform notified." },
+    };
+    setActionResult({ action: actionName, ...resultMap[actionName] });
     setTimeout(() => {
       setFeedItems(prev => prev.filter(item => item.filename !== selectedDetection));
       setSelectedDetection("");
       setIsProcessing(null);
-      setToastMessage(`Item resolved automatically: ${actionName}`);
+      setActionResult(null);
+      setToastMessage(`${resultMap[actionName].label}: ${selectedDetection}`);
       setTimeout(() => setToastMessage(null), 3000);
-    }, 1200);
+    }, 2000);
   };
 
   return (
@@ -173,10 +182,10 @@ export default function DetectionFeed() {
             
             {/* Interactive Toast Notification */}
             {toastMessage && (
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-4 fade-out slide-out-to-top-4 duration-300">
+              <div className="toast-notification absolute top-4 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-4 fade-out slide-out-to-top-4 duration-300">
                  <div className="bg-slate-900 dark:bg-n-1 text-white dark:text-n-8 px-4 py-2 rounded-full text-xs font-bold shadow-xl flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                    {toastMessage}
+                    <span className="text-slate-900 dark:text-white">{toastMessage}</span>
                  </div>
               </div>
             )}
@@ -260,13 +269,35 @@ export default function DetectionFeed() {
           </div>
 
            {/* Action buttons footer */}
+           {actionResult ? (
+             <div className={`p-5 border-t border-slate-200 dark:border-n-1/10 flex flex-col items-center justify-center gap-3 bg-${actionResult.color}-50 dark:bg-${actionResult.color}-950/20 animate-in fade-in duration-300`}>
+               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                 actionResult.color === 'emerald' ? 'bg-emerald-100 dark:bg-emerald-900/40' :
+                 actionResult.color === 'amber'   ? 'bg-amber-100 dark:bg-amber-900/40' :
+                                                    'bg-red-100 dark:bg-red-900/40'
+               }`}>
+                 {actionResult.color === 'emerald' ? <BadgeCheck className="w-5 h-5 text-emerald-600" /> :
+                  actionResult.color === 'amber'   ? <FileWarning className="w-5 h-5 text-amber-600" /> :
+                                                     <ShieldAlert className="w-5 h-5 text-red-600" />}
+               </div>
+               <div className="text-center">
+                 <p className={`text-sm font-bold ${
+                   actionResult.color === 'emerald' ? 'text-emerald-700 dark:text-emerald-400' :
+                   actionResult.color === 'amber'   ? 'text-amber-700 dark:text-amber-400' :
+                                                      'text-red-700 dark:text-red-400'
+                 }`}>{actionResult.label}</p>
+                 <p className="text-xs text-slate-500 dark:text-n-4 mt-1">{actionResult.desc}</p>
+               </div>
+               <Loader2 className="w-4 h-4 animate-spin text-slate-400" />
+             </div>
+           ) : (
            <div className="p-4 border-t border-slate-200 dark:border-n-1/10 grid grid-cols-3 gap-2 bg-slate-50 dark:bg-n-8/50">
-              <button disabled={!!isProcessing} onClick={() => handleAction("Marked Safe")} className="flex flex-col items-center justify-center py-2 px-1 border border-slate-200 dark:border-n-1/10 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-n-3 dark:hover:bg-n-7 transition-all active:scale-95 disabled:opacity-50">
-                {isProcessing === "Marked Safe" ? <Loader2 className="w-5 h-5 mb-1 text-emerald-500 animate-spin" /> : <BadgeCheck className="w-5 h-5 mb-1 text-emerald-500" />}
+              <button disabled={!!isProcessing} onClick={() => handleAction("Marked Safe")} className="flex flex-col items-center justify-center py-2 px-1 border border-emerald-200 bg-emerald-50 dark:bg-emerald-950/20 dark:border-emerald-900 rounded-lg text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-all active:scale-95 disabled:opacity-50">
+                {isProcessing === "Marked Safe" ? <Loader2 className="w-5 h-5 mb-1 animate-spin" /> : <BadgeCheck className="w-5 h-5 mb-1" />}
                 <span className="text-[10px] font-bold tracking-widest uppercase">Safe</span>
               </button>
-              <button disabled={!!isProcessing} onClick={() => handleAction("Sent for Review")} className="flex flex-col items-center justify-center py-2 px-1 border border-slate-200 dark:border-n-1/10 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-n-3 dark:hover:bg-n-7 transition-all active:scale-95 disabled:opacity-50">
-                {isProcessing === "Sent for Review" ? <Loader2 className="w-5 h-5 mb-1 text-amber-500 animate-spin" /> : <FileWarning className="w-5 h-5 mb-1 text-amber-500" />}
+              <button disabled={!!isProcessing} onClick={() => handleAction("Sent for Review")} className="flex flex-col items-center justify-center py-2 px-1 border border-amber-200 bg-amber-50 dark:bg-amber-950/20 dark:border-amber-900 rounded-lg text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-all active:scale-95 disabled:opacity-50">
+                {isProcessing === "Sent for Review" ? <Loader2 className="w-5 h-5 mb-1 animate-spin" /> : <FileWarning className="w-5 h-5 mb-1" />}
                 <span className="text-[10px] font-bold tracking-widest uppercase">Review</span>
               </button>
               <button disabled={!!isProcessing} onClick={() => handleAction("Take-down Initiated")} className="flex flex-col items-center justify-center py-2 px-1 bg-rose-700 hover:bg-rose-800 text-white rounded-lg transition-all active:scale-95 shadow-sm disabled:opacity-50">
@@ -274,6 +305,7 @@ export default function DetectionFeed() {
                 <span className="text-[10px] font-bold tracking-widest uppercase">Violation</span>
               </button>
            </div>
+           )}
         </div>
         );
       })()}
