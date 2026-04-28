@@ -4,13 +4,11 @@
 
 Verity is a near-real-time digital asset monitoring and forensics platform designed to help organizations identify, track, and flag unauthorized use or misappropriation of their proprietary digital media across the internet. Built to address the growing challenge of deepfakes, IP theft, and unauthorized content redistribution at scale.
 
----
 
 ## Overview
 
 Sports organizations, media companies, and content creators generate massive volumes of high-value digital assets that rapidly propagate across global platforms. Verity provides a scalable solution to close the visibility gap — enabling organizations to proactively authenticate their digital assets and detect anomalies in content propagation in near real-time.
 
----
 
 ## Features
 
@@ -24,7 +22,7 @@ Sports organizations, media companies, and content creators generate massive vol
 - **Responsive Design** — Optimized for desktop and mobile with a collapsible sidebar and mobile navigation drawer.
 - **Profile Management** — Synchronized user profile state across all dashboard views via React Context.
 
----
+
 
 ## Tech Stack
 
@@ -39,7 +37,6 @@ Sports organizations, media companies, and content creators generate massive vol
 | Build Tool | Turbopack |
 | Package Manager | npm / pnpm |
 
----
 
 ## Project Structure
 
@@ -69,7 +66,6 @@ landing_page/
 └── public/assets/                  # Static images, SVGs, and icons
 ```
 
----
 
 ## Getting Started
 
@@ -106,7 +102,6 @@ npm run build
 npm run start
 ```
 
----
 
 ## Dashboard Pages
 
@@ -120,7 +115,6 @@ npm run start
 | `/dashboard/subscription` | Subscription tier management |
 | `/dashboard/settings` | Profile, security, notifications, and API settings |
 
----
 
 ## Security
 
@@ -128,7 +122,6 @@ npm run start
 - All environment variables should be placed in a `.env.local` file which is excluded from version control via `.gitignore`.
 - The `.gitignore` covers `.env`, `.env.*`, `.env*.local`, `*.pem`, and `node_modules`.
 
----
 
 ## License
 
