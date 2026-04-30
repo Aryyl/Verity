@@ -118,7 +118,7 @@ npm run start
 | `/dashboard/violations` | Case management with DMCA escalation workflow |
 | `/dashboard/reports` | Analytics and downloadable reports |
 | `/dashboard/subscription` | Subscription tier management |
-| `/dashboard/settings` | Profile, security, notifications, and API settings |
+| `/dashboard/settings` | Profile, security, notifications, and API settings|
 
 ---
 
